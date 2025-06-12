@@ -163,6 +163,7 @@
             textBoxQuantity.Name = "textBoxQuantity";
             textBoxQuantity.Size = new Size(100, 23);
             textBoxQuantity.TabIndex = 9;
+            textBoxQuantity.Text = "1";
             // 
             // labelQuantity
             // 
@@ -179,6 +180,7 @@
             textBoxValue.Name = "textBoxValue";
             textBoxValue.Size = new Size(100, 23);
             textBoxValue.TabIndex = 7;
+            textBoxValue.Text = "0";
             // 
             // labelValue
             // 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using EasyModbus;
 
@@ -21,13 +21,12 @@ namespace ModbusTCP
             "05 (Write Single Coil)", "06 (Write Single Register)",
             "15 (Write Multiple Coils)", "16 (Write Multiple Registers)",
             });
-            groupBoxResult.Enabled = false;
             groupBoxCommunication.Enabled = false;
         }
 
         private void buttonSend_Click(object sender, EventArgs e)
         {
-            Task.Run(() => ProcessSend());
+            ProcessSend();
         }
 
         private void buttonDisconnect_Click(object sender, EventArgs e)
@@ -86,13 +85,28 @@ namespace ModbusTCP
             }
         }
 
+        public static string FormatNumber(int num, char prefix = '0')
+        {
+            // Kiểm tra số đầu vào trong khoảng 0-9999
+            if (num < 0 || num > 9999)
+            {
+                throw new ArgumentException("Số đầu vào phải là số nguyên từ 0 đến 9999");
+            }
+
+            // Định dạng số thành chuỗi 4 ký tự với padding '0'
+            string paddedNum = num.ToString().PadLeft(4, '0');
+
+            // Ghép prefix với số đã padding
+            return $"{prefix}{paddedNum}";
+        }
+
         private void ProcessSend()
         {
-            if (comboBoxFunction.SelectedIndex == -1)
-            {
-                MessageBox.Show("Please select function mode!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //if (comboBoxFunction.SelectedIndex == -1)
+            //{
+            //    MessageBox.Show("Please select function mode!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
             int Address = 0;
             int Quantity = 0;
             int Value = 0;
@@ -102,7 +116,7 @@ namespace ModbusTCP
                 Quantity = int.Parse(textBoxQuantity.Text);
                 Value = int.Parse(textBoxValue.Text);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Invalid number! Please recheck Address, Quantity and Value textBox!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -112,55 +126,55 @@ namespace ModbusTCP
                 case "01":
                     bool[] result1 = client.ReadCoils(Address, Quantity);
                     textBoxData.Clear();
-                    for (int i = 0; i <result1.Length; i++)
+                    textBoxData.Text += $"Register   Value\r\n";
+                    for (int i = 0; i < result1.Length; i++)
                     {
-                        textBoxData.Text += $" Register     Value\r\n";
-                        textBoxData.Text += $"0x{int.Parse(textBoxAdd.Text) + i}   {(result1[i] == true ? 1 : 0)}\r\n";
+                        textBoxData.Text += $"{FormatNumber(Address + i)}          {(result1[i] == true ? 1 : 0)}\r\n";
                     }
                     break;
                 case "02":
                     bool[] result2 = client.ReadDiscreteInputs(Address, Quantity);
                     textBoxData.Clear();
+                    textBoxData.Text += $"Register   Value\r\n";
                     for (int i = 0; i < result2.Length; i++)
                     {
-                        textBoxData.Text += $" Register     Value\r\n";
-                        textBoxData.Text += $"1x{int.Parse(textBoxAdd.Text) + i}   {(result2[i] == true ? 1 : 0)}\r\n";
+                        textBoxData.Text += $"{FormatNumber(Address + i, '1')}          {(result2[i] == true ? 1 : 0)}\r\n";
                     }
                     break;
                 case "03":
                     int[] result3 = client.ReadHoldingRegisters(Address, Quantity);
                     textBoxData.Clear();
+                    textBoxData.Text += $"Register   Value\r\n";
                     for (int i = 0; i < result3.Length; i++)
                     {
-                        textBoxData.Text += $" Register     Value\r\n";
-                        textBoxData.Text += $"4x{int.Parse(textBoxAdd.Text) + i}   {result3[i]}\r\n";
+                        textBoxData.Text += $"{FormatNumber(Address + i, '4')}          {result3[i]}\r\n";
                     }
                     break;
                 case "04":
                     int[] result4 = client.ReadHoldingRegisters(Address, Quantity);
                     textBoxData.Clear();
+                    textBoxData.Text += $"Register   Value\r\n";
                     for (int i = 0; i < result4.Length; i++)
                     {
-                        textBoxData.Text += $" Register     Value\r\n";
-                        textBoxData.Text += $"3x{int.Parse(textBoxAdd.Text) + i}   {result4[i]}\r\n";
+                        textBoxData.Text += $"{FormatNumber(Address + i, '3')}          {result4[i]}\r\n";
                     }
                     break;
                 case "05":
-                    client.WriteSingleCoil(Address, (Value == 0? false : true));
-                    MessageBox.Show("Connected to Modbus server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    client.WriteSingleCoil(Address, (Value == 0 ? false : true));
+                    MessageBox.Show("WriteSingleCoil Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case "06":
                     client.WriteSingleRegister(Address, Value);
-                    MessageBox.Show("Connected to Modbus server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("WriteSingleRegister Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case "15":
                     bool[] data15 = new bool[Quantity];
-                    for(int i = 0; i < Quantity; i++)
+                    for (int i = 0; i < Quantity; i++)
                     {
                         data15[i] = (Value == 0 ? false : true);
                     }
                     client.WriteMultipleCoils(Address, data15);
-                    MessageBox.Show("Connected to Modbus server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("WriteMultipleCoils Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case "16":
                     int[] data16 = new int[Quantity];
@@ -169,16 +183,16 @@ namespace ModbusTCP
                         data16[i] = Value;
                     }
                     client.WriteMultipleRegisters(Address, data16);
-                    MessageBox.Show("Connected to Modbus server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("WriteMultipleRegisters Successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
             }
         }
 
         private void comboBoxFunction_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBoxFunction.SelectedIndex == -1)
+            if (comboBoxFunction.SelectedIndex == -1)
                 return;
-            switch(comboBoxFunction.SelectedItem.ToString().Substring(0, 2))
+            switch (comboBoxFunction.SelectedItem.ToString().Substring(0, 2))
             {
                 case "01":
                 case "02":
@@ -187,12 +201,14 @@ namespace ModbusTCP
                     textBoxQuantity.ReadOnly = false;
                     labelValue.Visible = false;
                     textBoxValue.Visible = false;
+                    textBoxValue.Text = "0";
                     break;
-                case "05":  
+                case "05":
                 case "06":
                     labelValue.Visible = true;
                     textBoxValue.Visible = true;
                     textBoxQuantity.ReadOnly = true;
+                    textBoxQuantity.Text = "1";
                     break;
                 case "15":
                 case "16":
