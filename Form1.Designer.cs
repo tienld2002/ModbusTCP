@@ -36,6 +36,7 @@
             textBoxIPAdd = new TextBox();
             label1 = new Label();
             groupBoxCommunication = new GroupBox();
+            labelNote = new Label();
             comboBoxFunction = new ComboBox();
             label7 = new Label();
             textBoxQuantity = new TextBox();
@@ -122,6 +123,7 @@
             // 
             // groupBoxCommunication
             // 
+            groupBoxCommunication.Controls.Add(labelNote);
             groupBoxCommunication.Controls.Add(comboBoxFunction);
             groupBoxCommunication.Controls.Add(label7);
             groupBoxCommunication.Controls.Add(textBoxQuantity);
@@ -139,12 +141,21 @@
             groupBoxCommunication.TabStop = false;
             groupBoxCommunication.Text = "Read/Write Operations";
             // 
+            // labelNote
+            // 
+            labelNote.AutoSize = true;
+            labelNote.Location = new Point(187, 65);
+            labelNote.Name = "labelNote";
+            labelNote.Size = new Size(128, 15);
+            labelNote.TabIndex = 13;
+            labelNote.Text = "(Address base is 00000)";
+            // 
             // comboBoxFunction
             // 
             comboBoxFunction.FormattingEnabled = true;
             comboBoxFunction.Location = new Point(81, 27);
             comboBoxFunction.Name = "comboBoxFunction";
-            comboBoxFunction.Size = new Size(214, 23);
+            comboBoxFunction.Size = new Size(190, 23);
             comboBoxFunction.TabIndex = 12;
             comboBoxFunction.SelectedIndexChanged += comboBoxFunction_SelectedIndexChanged;
             // 
@@ -168,7 +179,7 @@
             // labelQuantity
             // 
             labelQuantity.AutoSize = true;
-            labelQuantity.Location = new Point(19, 89);
+            labelQuantity.Location = new Point(20, 89);
             labelQuantity.Name = "labelQuantity";
             labelQuantity.Size = new Size(56, 15);
             labelQuantity.TabIndex = 8;
@@ -193,7 +204,7 @@
             // 
             // buttonSend
             // 
-            buttonSend.Location = new Point(304, 27);
+            buttonSend.Location = new Point(304, 19);
             buttonSend.Name = "buttonSend";
             buttonSend.Size = new Size(107, 36);
             buttonSend.TabIndex = 4;
@@ -211,11 +222,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(23, 60);
+            label3.Location = new Point(38, 60);
             label3.Name = "label3";
-            label3.Size = new Size(52, 15);
+            label3.Size = new Size(38, 15);
             label3.TabIndex = 2;
-            label3.Text = "Address:";
+            label3.Text = "Offset:";
             // 
             // groupBoxResult
             // 
@@ -280,5 +291,6 @@
         private ComboBox comboBoxFunction;
         private GroupBox groupBoxResult;
         private TextBox textBoxData;
+        private Label labelNote;
     }
 }

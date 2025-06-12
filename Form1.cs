@@ -76,6 +76,7 @@ namespace ModbusTCP
                     textBoxIPAdd.ReadOnly = true;
                     textBoxPort.ReadOnly = true;
                     groupBoxCommunication.Enabled = true;
+                    comboBoxFunction.SelectedIndex = 0;
                     MessageBox.Show("Connected to Modbus server.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
@@ -215,6 +216,25 @@ namespace ModbusTCP
                     textBoxQuantity.ReadOnly = false;
                     labelValue.Visible = true;
                     textBoxValue.Visible = true;
+                    break;
+            }
+            switch (comboBoxFunction.SelectedItem.ToString().Substring(0, 2))
+            {
+                case "01":
+                case "05":
+                case "15":
+                    labelNote.Text = "(Address base is 00000)";
+                    break;
+                case "02":
+                    labelNote.Text = "(Address base is 10000)";
+                    break;
+                case "04":
+                    labelNote.Text = "(Address base is 30000)";
+                    break;
+                case "03":
+                case "06":
+                case "16":
+                    labelNote.Text = "(Address base is 40000)";
                     break;
             }
         }
