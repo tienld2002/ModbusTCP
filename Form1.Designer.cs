@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             groupBoxConnect = new GroupBox();
             buttonDisconnect = new Button();
             buttonConnect = new Button();
@@ -48,9 +49,13 @@
             label3 = new Label();
             groupBoxResult = new GroupBox();
             textBoxData = new TextBox();
+            panel1 = new Panel();
+            pictureBox1 = new PictureBox();
             groupBoxConnect.SuspendLayout();
             groupBoxCommunication.SuspendLayout();
             groupBoxResult.SuspendLayout();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // groupBoxConnect
@@ -62,7 +67,7 @@
             groupBoxConnect.Controls.Add(textBoxIPAdd);
             groupBoxConnect.Controls.Add(label1);
             groupBoxConnect.Dock = DockStyle.Top;
-            groupBoxConnect.Location = new Point(0, 0);
+            groupBoxConnect.Location = new Point(0, 59);
             groupBoxConnect.Name = "groupBoxConnect";
             groupBoxConnect.Size = new Size(417, 90);
             groupBoxConnect.TabIndex = 0;
@@ -134,7 +139,7 @@
             groupBoxCommunication.Controls.Add(textBoxAdd);
             groupBoxCommunication.Controls.Add(label3);
             groupBoxCommunication.Dock = DockStyle.Top;
-            groupBoxCommunication.Location = new Point(0, 90);
+            groupBoxCommunication.Location = new Point(0, 149);
             groupBoxCommunication.Name = "groupBoxCommunication";
             groupBoxCommunication.Size = new Size(417, 150);
             groupBoxCommunication.TabIndex = 6;
@@ -232,9 +237,9 @@
             // 
             groupBoxResult.Controls.Add(textBoxData);
             groupBoxResult.Dock = DockStyle.Fill;
-            groupBoxResult.Location = new Point(0, 240);
+            groupBoxResult.Location = new Point(0, 299);
             groupBoxResult.Name = "groupBoxResult";
-            groupBoxResult.Size = new Size(417, 158);
+            groupBoxResult.Size = new Size(417, 270);
             groupBoxResult.TabIndex = 7;
             groupBoxResult.TabStop = false;
             groupBoxResult.Text = "Data";
@@ -247,17 +252,38 @@
             textBoxData.Multiline = true;
             textBoxData.Name = "textBoxData";
             textBoxData.ScrollBars = ScrollBars.Vertical;
-            textBoxData.Size = new Size(411, 136);
+            textBoxData.Size = new Size(411, 248);
             textBoxData.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(pictureBox1);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(417, 59);
+            panel1.TabIndex = 8;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(110, 6);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(200, 47);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(417, 398);
+            ClientSize = new Size(417, 569);
             Controls.Add(groupBoxResult);
             Controls.Add(groupBoxCommunication);
             Controls.Add(groupBoxConnect);
+            Controls.Add(panel1);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Modbus TCP/IP";
@@ -267,6 +293,8 @@
             groupBoxCommunication.PerformLayout();
             groupBoxResult.ResumeLayout(false);
             groupBoxResult.PerformLayout();
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -292,5 +320,7 @@
         private GroupBox groupBoxResult;
         private TextBox textBoxData;
         private Label labelNote;
+        private Panel panel1;
+        private PictureBox pictureBox1;
     }
 }
