@@ -222,9 +222,9 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(38, 60);
+            label3.Location = new Point(34, 60);
             label3.Name = "label3";
-            label3.Size = new Size(38, 15);
+            label3.Size = new Size(42, 15);
             label3.TabIndex = 2;
             label3.Text = "Offset:";
             // 
