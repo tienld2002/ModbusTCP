@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             groupBoxConnect = new GroupBox();
             buttonDisconnect = new Button();
             buttonConnect = new Button();
@@ -267,7 +266,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Image = Properties.Resources.logo1;
             pictureBox1.Location = new Point(110, 6);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(200, 47);
